@@ -1,0 +1,32 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_procedure`(
+  IN operationType VARCHAR(10),
+  IN id INT,
+  IN FirstName VARCHAR(255),
+  IN LastName VARCHAR(255),
+  IN MobileNo VARCHAR(10),
+  IN PasswordHash VARCHAR(255),
+  IN ProfilePic VARCHAR(255),
+  IN CreatedBy VARCHAR(255),
+  IN UpdatedBy VARCHAR(255))
+BEGIN
+IF operationType = 'SELECT' THEN
+    SELECT * FROM registration WHERE id = id;
+  ELSEIF operationType = 'CREATE' THEN
+    INSERT INTO registration (FirstName,LastName, MobileNo, PasswordHash, ProfilePic, CreatedBy)
+    VALUES (FirstName,LastName, MobileNo, PasswordHash, ProfilePic, CreatedBy);
+  ELSEIF operationType = 'UPDATE' THEN
+    UPDATE equip9
+    SET FirstName = firstName,
+        LastName = lastName,
+        MobileNo = mobileNo,
+        PasswordHash = passwordHash,
+        ProfilePic =  profilePic,
+        UpdatedDate = CURRENT_TIMESTAMP,
+        UpdatedBy = updatedBy
+    WHERE id = id;
+  ELSEIF operationType = 'DELETE' THEN
+    DELETE FROM registration WHERE id = id;
+  ELSE
+    SELECT 'Invalid operation type';
+  END IF;
+END
